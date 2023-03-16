@@ -1,0 +1,15 @@
+import requests
+from bs4 import BeautifulSoup
+
+# 要爬取价格的游戏页面的URL列表
+game_urls = ['https://store.steampowered.com/app/570/Dota_2/',
+             'https://store.steampowered.com/app/730/CounterStrike_Global_Offensive/',
+             'https://store.steampowered.com/app/1091500/Red_Dead_Redemption_2/']
+
+# 遍历URL列表并爬取游戏价格
+for url in game_urls:
+    response = requests.get(url)
+    html_content = response.content
+    soup = BeautifulSoup(html_content, 'html.parser')
+    price = soup.find('div', {'class': 'game_purchase_price'}).text.strip()
+    print('The price of', soup.find('div', {'class': 'apphub_AppName'}).text, 'is', price)
