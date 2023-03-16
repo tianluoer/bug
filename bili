@@ -1,0 +1,20 @@
+import requests
+import json
+
+# 视频的av号
+aid = '41763215'
+
+# 评论API接口的URL
+url = f'https://api.bilibili.com/x/v2/reply?pn=1&type=1&oid={aid}'
+
+# 发送请求获取评论数据
+response = requests.get(url)
+comment_data = json.loads(response.text)
+
+# 遍历评论数据并输出评论信息
+for comment in comment_data['data']['replies']:
+    print('评论人：', comment['member']['uname'])
+    print('评论内容：', comment['content']['message'])
+    print('评论点赞数：', comment['like'])
+    print('评论时间：', comment['ctime'])
+    print('\n')
